@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Capital Normal University High School</title>
+<style>
+  :root{
+    --red:#ac1a0d; --red-dark:#9d1408; --red-deep:#8c1006;
+    --tan:#e8c9ae; --grayblue:#62708a; --ink:#3e3333;
+    --line:#e4ddd4; --bg:#f2f0ec; --gold:#d9b64c;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:Arial,"Helvetica Neue","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--ink);line-height:1.6}
+  a{color:inherit;text-decoration:none}
+  .main_area{max-width:980px;margin:0 auto;padding:0 12px}
+
+  /* ---------- header (mimics cnuhs.cn) ---------- */
+  .head_band{background:linear-gradient(180deg,#b62313 0%,#a61308 100%);border-bottom:3px solid var(--red-deep)}
+  .head_area{display:flex;align-items:center;justify-content:space-between;padding:10px 12px 8px}
+  .logo img{height:100px;display:block}
+  .help{text-align:right;padding-top:6px}
+  .language{list-style:none;display:flex;gap:0;justify-content:flex-end}
+  .language li{font-size:12px;color:#fff}
+  .language li a{color:#fff;padding:0 10px;border-right:1px solid rgba(255,255,255,.45)}
+  .language li:last-child a{border-right:none}
+  .language li a:hover{text-decoration:underline}
+  .help .slogan{color:var(--tan);font-size:12px;margin-top:14px;letter-spacing:1px}
+
+  /* ---------- menu ---------- */
+  .menu{background:var(--red-dark);height:44px}
+  .menu ul{list-style:none;display:flex;flex-wrap:nowrap}
+  .menu ul li{flex:1 1 auto;text-align:center;min-width:0}
+  .menu ul li a{display:block;line-height:44px;color:#fff;font-size:12px;padding:0 4px;border-right:1px solid rgba(255,255,255,.14);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .menu ul li:last-child a{border-right:none}
+  .menu ul li a:hover,.menu ul li a.curr{background:var(--red-deep);box-shadow:inset 0 -3px 0 var(--gold)}
+
+  /* ---------- banner ---------- */
+  .banner svg{display:block;width:100%;height:auto}
+
+  /* ---------- content ---------- */
+  .content{padding:20px 0 30px}
+  .welcome{background:#fff;border:1px solid var(--line);border-left:4px solid var(--red);padding:14px 18px;margin-bottom:22px}
+  .welcome h2{color:var(--red);font-size:20px;margin-bottom:4px}
+  .welcome p{font-size:13px;color:var(--grayblue)}
+
+  .sec_head{display:flex;align-items:baseline;justify-content:space-between;border-bottom:2px solid var(--red);margin:26px 0 12px;padding-bottom:6px}
+  .sec_head h3{color:var(--red);font-size:17px}
+  .sec_head .more{font-size:12px;color:var(--grayblue)}
+  .sec_head .more:hover{color:var(--red);text-decoration:underline}
+
+  .vgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px}
+  .vcard{background:#fff;border:1px solid var(--line);cursor:pointer;transition:box-shadow .15s,transform .15s}
+  .vcard:hover{box-shadow:0 4px 12px rgba(140,16,6,.18);transform:translateY(-2px)}
+  .vcard .thumb{position:relative;background:#000}
+  .vcard video{width:100%;aspect-ratio:16/9;display:block;object-fit:cover;pointer-events:none}
+  .vcard .cat-tag{position:absolute;left:8px;top:8px;background:rgba(156,20,8,.85);color:#fff;font-size:11px;padding:2px 8px;border-radius:2px}
+  .vcard .meta{padding:9px 11px 11px}
+  .vcard .meta b{display:block;font-size:14px;color:var(--ink);line-height:1.35;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .vcard .meta .g{color:var(--red);font-size:12px;margin-top:3px}
+  .vcard .meta .intro{color:var(--grayblue);font-size:12px;margin-top:4px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+
+  .empty{color:var(--grayblue);font-size:13px;padding:22px;text-align:center;border:1px dashed #cfc7bb;background:#fff}
+
+  .static-note{background:#fdf6e8;border:1px solid #e3cf9e;border-left:4px solid var(--gold);color:#7a5c14;font-size:13px;padding:12px 16px;margin-top:16px;line-height:1.7}
+
+  /* ---------- breadcrumb / inner ---------- */
+  .crumb{font-size:12px;color:var(--grayblue);margin:16px 0 10px}
+  .crumb a{color:var(--red)}
+  .crumb a:hover{text-decoration:underline}
+
+  /* ---------- upload panel ---------- */
+  .panel{background:#fff;border:1px solid var(--line);padding:18px 20px;margin-bottom:20px}
+  .panel h3{color:var(--red);font-size:16px;border-bottom:1px solid var(--line);padding-bottom:8px;margin-bottom:4px}
+  .form label{display:block;font-size:13px;font-weight:bold;color:var(--ink);margin:12px 0 4px}
+  .form label .req{color:var(--red)}
+  .form input[type=text],.form textarea{width:100%;max-width:560px;padding:8px 10px;border:1px solid #c6beb2;border-radius:2px;font-size:14px;font-family:inherit}
+  .form textarea{min-height:84px;resize:vertical}
+  .form input[type=file]{font-size:13px;margin-top:4px}
+  .hint{font-size:12px;color:var(--grayblue);margin-top:3px}
+  .wc{font-size:12px;color:var(--grayblue);text-align:right;max-width:560px}
+  .wc.over{color:var(--red);font-weight:bold}
+  .btn{display:inline-block;background:var(--red);color:#fff;border:1px solid var(--red-dark);border-radius:2px;padding:9px 26px;font-size:14px;cursor:pointer;font-family:inherit}
+  .btn:hover{background:var(--red-deep)}
+  .btn.ghost{background:#fff;color:var(--red);border:1px solid var(--red)}
+  .btn.ghost:hover{background:#fdf3f2}
+  .progress{height:8px;background:#ece7df;border:1px solid #d8d1c5;max-width:560px;margin-top:12px;display:none}
+  .progress i{display:block;height:100%;width:0;background:var(--red);transition:width .2s}
+  .msg{margin-top:10px;font-size:13px;display:none;padding:8px 12px;max-width:560px}
+  .msg.ok{background:#eef7ee;color:#1d6b3a;border:1px solid #bfe0c6;display:block}
+  .msg.err{background:#fdf0ef;color:var(--red);border:1px solid #eec4c0;display:block}
+
+  /* ---------- video detail ---------- */
+  .detail-player{background:#fff;border:1px solid var(--line);padding:14px}
+  .detail-player video{width:100%;max-height:540px;background:#000;display:block}
+  .detail-info{background:#fff;border:1px solid var(--line);padding:16px 20px;margin-top:14px}
+  .detail-info .chip{display:inline-block;background:var(--red);color:#fff;font-size:12px;padding:2px 10px;margin-bottom:8px}
+  .detail-info h2{font-size:20px;color:var(--ink);margin-bottom:8px}
+  .detail-info .line{font-size:13px;color:var(--grayblue);margin:4px 0}
+  .detail-info .line b{color:var(--red)}
+  .detail-info .intro-p{font-size:14px;color:var(--ink);border-top:1px dashed var(--line);margin-top:12px;padding-top:12px}
+
+  /* ---------- footer ---------- */
+  .footer{background:var(--red-dark);color:#fff;text-align:center;padding:18px 12px 20px;margin-top:20px;font-size:12px;line-height:1.9}
+  .footer .links{margin-bottom:4px}
+  .footer a{color:#fff}
+  .footer a:hover{text-decoration:underline}
+
+  @media (max-width:640px){
+    .head_area{flex-direction:column;align-items:flex-start;gap:6px}
+    .logo img{height:64px}
+    .help{display:none}
+    .menu{height:auto}
+    .menu ul{flex-wrap:wrap}
+    .menu ul li a{font-size:10px;padding:0 4px}
+    .detail-player video{max-height:300px}
+  }
+</style>
+</head>
+<body>
+
+<div class="head_band">
+  <div class="main_area head_area">
+    <div class="logo">
+      <a href="#/"><img src="logo.jpg" alt="Capital Normal University High School"></a>
+    </div>
+    <div class="help">
+      <ul class="language">
+        <li><a href="https://www.cnuhs.cn" target="_blank" rel="noopener">中文</a></li>
+        <li><a href="#/">English</a></li>
+        <li><a href="mailto:office@cnuhs.edu.cn">Contact Us</a></li>
+      </ul>
+      <div class="slogan">自觉 &nbsp;·&nbsp; 勤奋 &nbsp;·&nbsp; 求实 &nbsp;·&nbsp; 创新</div>
+    </div>
+  </div>
+  <div class="menu">
+    <div class="main_area">
+      <ul id="mainNav"></ul>
+    </div>
+  </div>
+</div>
+
+<div class="main_area content" id="app"></div>
+
+<div class="footer">
+  <div class="links">
+    <a href="https://www.cnuhs.cn" target="_blank" rel="noopener">中文网站</a>
+    &nbsp;|&nbsp; <a href="#/">English Website</a>
+    &nbsp;|&nbsp; <a href="mailto:office@cnuhs.edu.cn">Contact Us</a>
+  </div>
+  Capital Normal University High School &nbsp;·&nbsp; 首都师范大学附属中学<br>
+  No. 105, North Road of AAA, Haidian District, Beijing &nbsp;·&nbsp; © 2026 CNUHS. All rights reserved.
+</div>
+
+<script>
+"use strict";
+
+/* ============================================================
+   Configuration
+   ============================================================ */
+var CATS = [
+  { id:"teachers",
+    name:"Meet our teachers in CNUHS",
+    short:"Meet our teachers",
+    desc:"Our teachers are passionate, patient and always ready to help. Watch how they light up every classroom." },
+  { id:"activities",
+    name:"Activities in CNUHS",
+    short:"Activities",
+    desc:"From sports meets to drama nights, science fairs to choir concerts — there is always something happening here." },
+  { id:"life",
+    name:"Life at CNUHS",
+    short:"Life at CNUHS",
+    desc:"Morning reading, lunch with friends, clubs in the afternoon. Campus life here is simple, warm and full of stories." },
+  { id:"culture",
+    name:"Culture and creative products in CNUHS",
+    short:"Culture &amp; creative products",
+    desc:"Our school badge, notebooks, canvas bags and postcards — creative products designed by students, for students." }
+];
+var MAX_MB = 200;
+var MAX_WORDS = 100;
+
+/* ============================================================
+   State
+   ============================================================ */
+var cache = {};          // catId -> video list
+var allVideos = [];      // newest first
+var pollTimer = null;
+var STATIC_MODE = false; // true when hosted without backend (e.g. GitHub Pages)
+
+/* ============================================================
+   API
+   ============================================================ */
+function apiGet(url){
+  return fetch(url).then(function(r){
+    if (!r.ok) throw new Error("HTTP " + r.status);
+    return r.json();
+  });
+}
+function loadAll(){
+  return apiGet("api/videos").then(function(d){
+    allVideos = d.videos || [];
+    cache = {};
+    CATS.forEach(function(c){
+      cache[c.id] = allVideos.filter(function(v){ return v.cat === c.id; });
+    });
+    render();
+  }).catch(function(){
+    STATIC_MODE = true;
+    allVideos = []; cache = {};
+    render();
+  });
+}
+
+/* ============================================================
+   Helpers
+   ============================================================ */
+function esc(s){
+  return String(s == null ? "" : s).replace(/&/g,"&amp;").replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+}
+function catName(id){
+  var c = CATS.find(function(x){ return x.id === id; });
+  return c ? c.name : "";
+}
+function dateStr(t){
+  var d = new Date(t);
+  var m = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"][d.getMonth()];
+  return m + " " + d.getDate() + ", " + d.getFullYear();
+}
+function staticNote(){
+  if (!STATIC_MODE) return "";
+  return '<div class="static-note"><b>Demo mode (static hosting).</b> Browsing works, but uploading videos needs the server version of this website. '+
+    'To upload, please open the site served from the classroom computer (double-click START-Windows.bat), or ask your teacher for the live address.</div>';
+}
+
+/* ============================================================
+   Views (hash routing: #/  #/cat/<id>  #/video/<id>)
+   ============================================================ */
+function navHTML(){
+  var cur = route();
+  function cls(href){ return href === cur ? "curr" : ""; }
+  var h = '<li><a href="#/" class="'+cls("#/")+'">Home</a></li>';
+  CATS.forEach(function(c){
+    var href = "#/cat/" + c.id;
+    h += '<li><a href="'+href+'" class="'+cls(href)+'">'+esc(c.name)+'</a></li>';
+  });
+  return h;
+}
+
+function videoCard(v){
+  return '<div class="vcard" data-goto="#/video/'+esc(v.id)+'">'+
+    '<div class="thumb">'+
+      '<video preload="metadata" playsinline src="videos/'+esc(v.file)+'#t=0.1"></video>'+
+      '<span class="cat-tag">'+esc(CATS.find(function(c){return c.id===v.cat;}) ? CATS.find(function(c){return c.id===v.cat;}).short : "")+'</span>'+
+    '</div>'+
+    '<div class="meta">'+
+      '<b>'+esc(v.title)+'</b>'+
+      '<div class="g">'+esc(v.group)+'</div>'+
+      (v.intro ? '<div class="intro">'+esc(v.intro)+'</div>' : '')+
+    '</div>'+
+  '</div>';
+}
+
+function sectionBlock(cat, limit){
+  var list = cache[cat.id] || [];
+  var shown = limit ? list.slice(0, limit) : list;
+  var h = '<div class="sec_head"><h3>'+esc(cat.name)+'</h3>'+
+    '<span class="more"><a href="#/cat/'+cat.id+'">Upload / see all ('+list.length+') &raquo;</a></span></div>';
+  if (!shown.length) {
+    h += '<div class="empty">No videos in this section yet. Open the section and be the first group to share your advertisement!</div>';
+  } else {
+    h += '<div class="vgrid">';
+    shown.forEach(function(v){ h += videoCard(v); });
+    h += '</div>';
+  }
+  return h;
+}
+
+function homeView(){
+  var h = '';
+  CATS.forEach(function(c){ h += sectionBlock(c, 6); });
+  return h;
+}
+
+function catView(cat){
+  var h = '<div class="crumb"><a href="#/">Home</a> &nbsp;&rsaquo;&nbsp; '+esc(cat.name)+'</div>';
+  if (STATIC_MODE) {
+    h += '<div class="panel"><h3>Upload is not available in demo mode</h3>'+
+      '<p class="hint">This page is hosted as a static website (e.g. GitHub Pages), which cannot store uploaded videos. '+
+      'To upload your group&rsquo;s advertisement, please open the website served from the classroom computer '+
+      '(double-click START-Windows.bat on that computer) and open the address it shows.</p></div>';
+  } else {
+    h += '<div class="panel form" id="uploadPanel">'+
+      '<h3>'+esc(cat.name)+' &mdash; Upload your advertisement</h3>'+
+    '<p class="hint">Your video will be shown on this official website right after you submit it &mdash; everyone who opens this page will see it.</p>'+
+    '<label for="fGroup">Group number <span class="req">*</span></label>'+
+    '<input type="text" id="fGroup" maxlength="20" placeholder="e.g. Group 3">'+
+    '<label for="fTitle">Video title <span class="req">*</span></label>'+
+    '<input type="text" id="fTitle" maxlength="80" placeholder="e.g. Our School, Our Story">'+
+    '<label for="fIntro">Introduction of our video <span class="req">*</span></label>'+
+    '<textarea id="fIntro" placeholder="Introduce your video in no more than 100 words: what is it about? Why should people come to our school?"></textarea>'+
+    '<div class="wc" id="wc">0 / '+MAX_WORDS+' words</div>'+
+    '<label for="fFile">Video file <span class="req">*</span></label>'+
+    '<input type="file" id="fFile" accept="video/*">'+
+    '<p class="hint">MP4 / MOV / WebM, up to '+MAX_MB+' MB. AI-made videos are welcome!</p>'+
+    '<div class="progress" id="upBar"><i id="upFill"></i></div>'+
+    '<div class="msg" id="upMsg"></div>'+
+    '<p style="margin-top:14px"><button class="btn" id="upBtn" type="button">Submit my advertisement</button></p>'+
+    '</div>';
+  }
+  h += '<div class="sec_head"><h3>Advertisements from students</h3><span class="more">'+(cache[cat.id]||[]).length+' video(s)</span></div>'+
+  '<div class="vgrid" id="catGrid">';
+  var list = cache[cat.id] || [];
+  if (!list.length) {
+    h += '<div class="empty" style="grid-column:1/-1">No videos yet. Be the first group to share your advertisement!</div>';
+  } else {
+    list.forEach(function(v){ h += videoCard(v); });
+  }
+  h += '</div>';
+  return h;
+}
+
+function videoView(v){
+  var h = '<div class="crumb"><a href="#/">Home</a> &nbsp;&rsaquo;&nbsp; '+esc(catName(v.cat))+' &nbsp;&rsaquo;&nbsp; '+esc(v.title)+'</div>'+
+  '<div class="detail-player">'+
+    '<video controls playsinline preload="metadata" src="videos/'+esc(v.file)+'"></video>'+
+  '</div>'+
+  '<div class="detail-info">'+
+    '<span class="chip">'+esc(catName(v.cat))+'</span>'+
+    '<h2>'+esc(v.title)+'</h2>'+
+    '<div class="line">Group: <b>'+esc(v.group)+'</b></div>'+
+    '<div class="line">Uploaded: '+dateStr(v.time)+'</div>'+
+    (v.intro ? '<div class="intro-p"><b style="color:var(--red)">Introduction of our video:</b><br>'+esc(v.intro)+'</div>' : '')+
+    '<p style="margin-top:16px"><a href="#/cat/'+esc(v.cat)+'" class="btn ghost">&laquo; Back to '+esc(CATS.find(function(c){return c.id===v.cat;}) ? CATS.find(function(c){return c.id===v.cat;}).short : "section")+'</a>'+
+    '&nbsp;&nbsp;<a href="#/" class="btn ghost">Home</a></p>'+
+  '</div>';
+  /* more videos from the same section */
+  var others = (cache[v.cat] || []).filter(function(x){ return x.id !== v.id; }).slice(0, 3);
+  if (others.length) {
+    h += '<div class="sec_head"><h3>More from this section</h3></div><div class="vgrid">';
+    others.forEach(function(x){ h += videoCard(x); });
+    h += '</div>';
+  }
+  return h;
+}
+
+/* ============================================================
+   Router & render
+   ============================================================ */
+function route(){
+  var h = location.hash || "#/";
+  return h.replace(/^#/, "");
+}
+function render(){
+  document.getElementById("mainNav").innerHTML = navHTML();
+  var app = document.getElementById("app");
+  var r = route();
+  if (r === "/" || r === "") {
+    app.innerHTML = staticNote() + homeView();
+  } else if (r.indexOf("/cat/") === 0) {
+    var id = r.slice(5);
+    var cat = CATS.find(function(c){ return c.id === id; });
+    if (!cat) { location.hash = "#/"; return; }
+    app.innerHTML = staticNote() + catView(cat);
+    bindUpload(cat);
+  } else if (r.indexOf("/video/") === 0) {
+    var vid = decodeURIComponent(r.slice(7));
+    var v = allVideos.find(function(x){ return x.id === vid; });
+    if (!v) {
+      app.innerHTML = '<div class="crumb"><a href="#/">Home</a></div><div class="empty">This video could not be found. It may have been removed.</div>';
+      return;
+    }
+    app.innerHTML = staticNote() + videoView(v);
+  } else {
+    location.hash = "#/";
+    return;
+  }
+  window.scrollTo(0, 0);
+}
+
+/* ============================================================
+   Upload
+   ============================================================ */
+function wordCount(s){
+  var t = s.trim();
+  return t ? t.split(/\s+/).length : 0;
+}
+function bindUpload(cat){
+  var btn = document.getElementById("upBtn");
+  if (!btn) return;
+  var ta = document.getElementById("fIntro");
+  var wc = document.getElementById("wc");
+  ta.addEventListener("input", function(){
+    var n = wordCount(ta.value);
+    wc.textContent = n + " / " + MAX_WORDS + " words";
+    wc.className = "wc" + (n > MAX_WORDS ? " over" : "");
+  });
+  btn.addEventListener("click", function(){
+    var group = document.getElementById("fGroup").value.trim();
+    var title = document.getElementById("fTitle").value.trim();
+    var intro = ta.value.trim();
+    var file  = document.getElementById("fFile").files[0];
+    var msg   = document.getElementById("upMsg");
+    function fail(t){ msg.className = "msg err"; msg.textContent = t; }
+    if (!group) return fail("Please enter your group number (e.g. Group 3).");
+    if (!title) return fail("Please enter a title for your video.");
+    if (!intro) return fail("Please write the introduction of your video.");
+    if (wordCount(intro) > MAX_WORDS) return fail("Your introduction is over "+MAX_WORDS+" words. Please shorten it.");
+    if (!file)  return fail("Please choose your video file first.");
+    if (file.size > MAX_MB * 1024 * 1024) return fail("Your video is too large. Please keep it under "+MAX_MB+" MB.");
+
+    var fd = new FormData();
+    fd.append("cat", cat.id);
+    fd.append("group", group);
+    fd.append("title", title);
+    fd.append("intro", intro);
+    fd.append("video", file);
+    var bar = document.getElementById("upBar"), fill = document.getElementById("upFill");
+    bar.style.display = "block";
+    btn.disabled = true; btn.textContent = "Uploading…";
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "api/upload");
+    xhr.upload.onprogress = function(e){
+      if (e.lengthComputable) fill.style.width = Math.round(e.loaded / e.total * 100) + "%";
+    };
+    xhr.onload = function(){
+      btn.disabled = false; btn.textContent = "Submit my advertisement";
+      if (xhr.status === 200) {
+        msg.className = "msg ok";
+        msg.textContent = "Success! Your advertisement is now live on the website. 🎉";
+        document.getElementById("fGroup").value = "";
+        document.getElementById("fTitle").value = "";
+        ta.value = "";
+        wc.textContent = "0 / " + MAX_WORDS + " words";
+        document.getElementById("fFile").value = "";
+        document.getElementById("upBar").style.display = "none";
+        fill.style.width = "0";
+        loadAll();
+      } else {
+        msg.className = "msg err";
+        try { fail(JSON.parse(xhr.responseText).error || "Upload failed. Please try again."); }
+        catch(e){ fail("Upload failed. Please try again."); }
+      }
+    };
+    xhr.onerror = function(){
+      btn.disabled = false; btn.textContent = "Submit my advertisement";
+      fail("Network error. Please check your connection and try again.");
+    };
+    xhr.send(fd);
+  });
+}
+
+/* ============================================================
+   Global click routing (video cards)
+   ============================================================ */
+document.addEventListener("click", function(ev){
+  var card = ev.target.closest ? ev.target.closest("[data-goto]") : null;
+  if (card) {
+    location.hash = card.getAttribute("data-goto");
+  }
+});
+
+/* ============================================================
+   Live updates: SSE + polling fallback
+   ============================================================ */
+function startLive(){
+  if (pollTimer) clearInterval(pollTimer);
+  pollTimer = setInterval(loadAll, 4000);
+  if (STATIC_MODE) return; // no backend to push events from
+  try {
+    var es = new EventSource("api/events");
+    es.onmessage = function(){ loadAll(); };
+  } catch(e){}
+}
+
+/* ============================================================
+   Boot
+   ============================================================ */
+window.addEventListener("hashchange", render);
+loadAll().then(startLive);
+</script>
+</body>
+</html>

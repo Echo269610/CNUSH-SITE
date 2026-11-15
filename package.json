@@ -1,0 +1,9 @@
+{
+  "name": "cnuhs-ad-web",
+  "version": "1.0.0",
+  "private": true,
+  "description": "CNUHS student advertisement video website",
+  "scripts": {
+    "start": "node server.js"
+  }
+}
